@@ -19,15 +19,16 @@ class Perfectlightbox
      * @var
      */
     public $cObj;
+    private array $piVars = [];
 
     /**
      * @param $content
      * @param $conf
      * @return string
      */
-    public function main($content, $conf)
+    public function main($content, $conf): string
     {
-        $uid = (1 == intval($conf['ignoreUid']) ? '' : $this->cObj->data['uid']);
+        $uid = (1 === (int)$conf['ignoreUid'] ? '' : $this->cObj->data['uid']);
         $lightboxParams = '';
         if ($this->getConfiguration('tx_perfectlightbox_activate')) {
             $lightboxParams = 'rel="lightbox"';
@@ -37,15 +38,15 @@ class Perfectlightbox
                 if ($presentation) {
                     $lightboxParams = 'rel="lightbox[presentlb' . $uid . ']"';
                 }
-                if (!$presentation && $this->cObj->data['tx_perfectlightbox_slideshow'] == 1) {
+                if (!$presentation && (int)$this->cObj->data['tx_perfectlightbox_slideshow'] === 1) {
                     $lightboxParams = 'rel="lightbox[lb' . $uid . 'slideshow]"';
                 }
-                if ($presentation && $this->cObj->data['tx_perfectlightbox_slideshow'] == 1) {
+                if ($presentation && (int)$this->cObj->data['tx_perfectlightbox_slideshow'] === 1) {
                     $lightboxParams = 'rel="lightbox[presentlb' . $uid . 'slideshow]"';
                 }
             }
         }
-        if (trim($this->cObj->data['image_link']) != '') {
+        if (trim($this->cObj->data['image_link']) !== '') {
             return $content["TAG"];
         }
         return '<a href="' . $content["url"] . '"' . $content["targetParams"] . ' ' . $content["aTagParams"] . ' ' . $lightboxParams . '>';
@@ -58,7 +59,7 @@ class Perfectlightbox
      */
     public function useGlobal($content, $conf)
     {
-        $uid = (1 == intval($conf['ignoreUid']) ? '' : $this->cObj->data['uid']);
+        $uid = (1 === (int)$conf['ignoreUid'] ? '' : $this->cObj->data['uid']);
         $lightboxParams = '';
         if ($this->getConfiguration('image_zoom')) {
             $lightboxParams = 'rel="lightbox[lb' . $uid . ']"';
@@ -74,7 +75,7 @@ class Perfectlightbox
                 $lightboxParams = 'rel="lightbox[presentlb' . $uid . 'slideshow]"';
             }
         }
-        if (trim($this->cObj->data['image_link']) != '') {
+        if (trim($this->cObj->data['image_link']) !== '') {
             return $content["TAG"];
         }
         return '<a href="' . $content["url"] . '"' . $content["targetParams"] . ' ' . $content["aTagParams"] . ' ' . $lightboxParams . '>';
@@ -87,9 +88,9 @@ class Perfectlightbox
      *
      * @return bool
      */
-    protected function getConfiguration($name)
+    protected function getConfiguration(string $name): bool
     {
-        return 1 === (int) $this->cObj->data[$name];
+        return 1 === (int)$this->cObj->data[$name];
     }
 
     /**
@@ -98,12 +99,12 @@ class Perfectlightbox
      * BEWARE: Since tt_news 3.0 this won't work until Rupert updates hooks for marker-processing
      *
      * @param array $paramArray : $markerArray && $config of the current news item in an array
-     * @param    [type]        $conf: ...
-     *
+     * @param array $conf
      * @return    array        the processed markerArray
      */
-    public function imageMarkerFunc($paramArray, $conf)
+    public function imageMarkerFunc(array $paramArray, array $conf): array
     {
+        $markedAsSpecial = 0;
         $markerArray = $paramArray[0];
         $lConf = $paramArray[1];
         $pObj = &$conf['parentObj'];
@@ -123,13 +124,13 @@ class Perfectlightbox
         $cc = 0;
 
         // BEN: We need to mark these items prior to arrayshifting
-        if (count($imgs) == 1 && $pObj->config['firstImageIsPreview'] && $pObj->config['code'] == 'SINGLE' && !$pObj->config['forceFirstImageIsPreview']) {
+        if (count($imgs) === 1 && $pObj->config['firstImageIsPreview'] && $pObj->config['code'] === 'SINGLE' && !$pObj->config['forceFirstImageIsPreview']) {
             $markedAsSpecial = 1;
         }
         // END.
 
         // remove first img from the image array in single view if the TSvar firstImageIsPreview is set
-        if (((count($imgs) > 1 && $pObj->config['firstImageIsPreview']) || (count($imgs) >= 1 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->config['code'] == 'SINGLE') {
+        if (((count($imgs) > 1 && $pObj->config['firstImageIsPreview']) || (count($imgs) >= 1 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->config['code'] === 'SINGLE') {
             array_shift($imgs);
             array_shift($imgsCaptions);
             array_shift($imgsAltTexts);
@@ -146,7 +147,7 @@ class Perfectlightbox
         }
 
         foreach ($imgs as $val) {
-            if ($cc == $imageNum) {
+            if ($cc === $imageNum) {
                 break;
             }
             if ($val) {
@@ -156,11 +157,11 @@ class Perfectlightbox
 
 
                 // BEN: We check count of images >(=) 0 here because the array got shifted before!!! (See above)
-                if (((count($imgs) > 0 && $pObj->config['firstImageIsPreview']) || (count($imgs) >= 0 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->config['code'] == 'SINGLE') {
+                if (((count($imgs) > 0 && $pObj->config['firstImageIsPreview']) || (count($imgs) >= 0 && $pObj->config['forceFirstImageIsPreview'])) && $pObj->config['code'] === 'SINGLE') {
                     // BEN: Additionally we need to check our special case
 
 
-                    if (count($imgs) == 1 && $markedAsSpecial) {
+                    if (count($imgs) === 1 && $markedAsSpecial) {
                         $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $cc;
                     } else {
                         $GLOBALS['TSFE']->register['IMAGE_NUM_CURRENT'] = $cc + 1;
