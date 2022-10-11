@@ -73,3 +73,8 @@ plugin.tx_perfectlightbox {
 	slideshowInterval = 5000
 
 }
+
+# This uses the new Settings in TYPO3 v9+ all the other ones might get ignored
+
+styles.content.textmedia.linkWrap.lightboxCssClass = lightbox-enabled
+styles.content.textmedia.linkWrap.lightboxEnabled = 1
