@@ -99,6 +99,10 @@ body.lb-disable-scrolling {
   background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 }
 
+.lb-nav a:hover {
+  background-color: transparent !important;
+}
+
 .lb-prev, .lb-next {
   height: 100%;
   cursor: pointer;
@@ -210,8 +214,4 @@ body.lb-disable-scrolling {
   cursor: pointer;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
-}
-
-.lightbox a.lb-prev:hover, .lightbox a.lb-next:hover {
-	background-color: transparent!important;
 }
