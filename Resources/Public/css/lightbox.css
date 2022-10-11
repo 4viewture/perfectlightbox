@@ -211,3 +211,7 @@ body.lb-disable-scrolling {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
+
+.lightbox .lb-prev, .lightbox .lb-next {
+	background-color: transparent!important;
+}
