@@ -99,10 +99,6 @@ body.lb-disable-scrolling {
   background-image: url('data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
 }
 
-.lb-nav a:hover {
-  background-color: transparent !important;
-}
-
 .lb-prev, .lb-next {
   height: 100%;
   cursor: pointer;
@@ -125,6 +121,7 @@ body.lb-disable-scrolling {
 .lb-nav a.lb-prev:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
+  background-color: transparent;
 }
 
 .lb-nav a.lb-next {
@@ -143,6 +140,7 @@ body.lb-disable-scrolling {
 .lb-nav a.lb-next:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
+  background-color: transparent;
 }
 
 .lb-dataContainer {
